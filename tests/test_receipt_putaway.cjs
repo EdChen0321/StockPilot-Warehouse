@@ -1,0 +1,18 @@
+const assert=require('node:assert/strict');
+const {receiptPutaway}=require('../web/format.js');
+const receipt={id:'r',state:'confirmed'};
+const units=[{receipt_id:'r',location:'warehouse',place_id:null},{receipt_id:'r',location:'warehouse',place_id:null}];
+assert.deepEqual(receiptPutaway(receipt,units),{state:'unassigned',label:'未配櫃',pending:2});
+units[0].place_id='shelf';
+assert.deepEqual(receiptPutaway(receipt,units),{state:'partial',label:'部分配櫃',pending:1});
+units[1].place_id='shelf';
+assert.deepEqual(receiptPutaway(receipt,units),{state:'complete',label:'已配櫃',pending:0});
+units[0].location='shipped';
+assert.equal(receiptPutaway(receipt,units).state,'complete','shipping does not undo putaway');
+units[0].location='warehouse';units[0].place_id=null;
+assert.equal(receiptPutaway(receipt,units).pending,1,'returned unassigned stock needs putaway again');
+assert.equal(receiptPutaway({...receipt,state:'draft'},units).state,'not_received');
+assert.equal(receiptPutaway({...receipt,state:'cancelled'},units).pending,0);
+assert.equal(receiptPutaway(receipt,[{receipt_id:'other',location:'warehouse',place_id:null}]).state,'none');
+assert.equal(receiptPutaway(receipt,[{receipt_id:'r',location:'shipped',place_id:null}]).state,'none','legacy shipped stock is not falsely marked placed');
+console.log('Receipt putaway: unassigned, partial, complete, shipped, returned, draft, cancelled and legacy states passed.');

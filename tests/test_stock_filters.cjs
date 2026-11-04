@@ -1,0 +1,13 @@
+const assert=require('node:assert/strict');
+const {stockUnitMatches}=require('../web/format.js');
+const u={id:'unit-01',product_id:'p1',location:'warehouse',quality:'defective',return_hold:true};
+const p={name:'合成包',sku:'BAG-01',barcode:'00123'};
+assert(stockUnitMatches(u,p,{q:'  bag-01 '}));
+assert(stockUnitMatches(u,p,{q:'00123'}));
+assert(stockUnitMatches(u,p,{q:'unit-01',quality:'defective',hold:true}));
+assert(!stockUnitMatches(u,p,{location:'staging'}));
+assert(!stockUnitMatches(u,p,{quality:'good'}));
+assert(!stockUnitMatches(u,p,{product:'p2'}));
+assert(!stockUnitMatches({...u,return_hold:false},p,{hold:true}));
+assert(!stockUnitMatches(u,undefined,{q:'missing'}));
+console.log('8 stock filter assertions passed');

@@ -1,0 +1,11 @@
+const assert=require('node:assert/strict');
+const {previousPeriod,metricChange}=require('../web/sales-charts.js');
+assert.deepEqual(previousPeriod('2028-03-01','2028-03-31'),{start:'2028-01-30',end:'2028-02-29',days:31});
+assert.deepEqual(previousPeriod('2026-01-01','2026-01-01'),{start:'2025-12-31',end:'2025-12-31',days:1});
+assert.throws(()=>previousPeriod('2026-02-30','2026-03-01'));
+assert.throws(()=>previousPeriod('2026-03-02','2026-03-01'));
+assert.deepEqual(metricChange(120,100),{difference:20,percent:20});
+assert.deepEqual(metricChange(10,0),{difference:10,percent:null});
+assert.deepEqual(metricChange(0,0),{difference:0,percent:null});
+assert.deepEqual(metricChange(null,10),{difference:null,percent:null});
+console.log('Previous equal-length period, leap year, zero baseline and missing metrics passed.');

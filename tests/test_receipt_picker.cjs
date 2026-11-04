@@ -1,0 +1,14 @@
+const assert=require('node:assert/strict');
+const {receiptProductPage}=require('../web/format.js');
+const products=Array.from({length:1234},(_,i)=>({id:String(i),name:'合成商品 '+i,sku:'SKU-'+i,barcode:String(i).padStart(8,'0'),specification:'藍色',active:1,kind:'product'}));
+products.push({id:'off',name:'停用',active:0,kind:'product'},{id:'bundle',name:'套組',active:1,kind:'bundle'});
+assert.equal(receiptProductPage(products).total,1234);
+assert.equal(receiptProductPage(products).items.length,25);
+assert.equal(receiptProductPage(products,'',50).items.length,9);
+assert.equal(receiptProductPage(products,'',999).page,50);
+assert.equal(receiptProductPage(products,'00001233').items[0].id,'1233');
+assert.equal(receiptProductPage(products,'sku-1233 藍色').total,1);
+assert.equal(receiptProductPage(products,'停用').total,0);
+assert.equal(receiptProductPage(products,'套組').total,0);
+assert.equal(receiptProductPage(products,'不存在').pages,1);
+console.log('9 receipt picker assertions passed with 1234 active SKUs');

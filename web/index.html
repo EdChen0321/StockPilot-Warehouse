@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>營運工作台</title>
+  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="/operations.css">
+  <link rel="stylesheet" href="/layout-refinements.css">
+  <link rel="stylesheet" href="/assistant-chat.css">
+  <link rel="stylesheet" href="/ai-evaluation.css">
+  <script src="/format.js?v=20261102-perf2" defer></script>
+  <script src="/vendor/echarts-6.1.0/echarts.min.js?v=20261102-perf2" defer></script>
+  <script src="/status.js?v=20261102-perf2" defer></script>
+  <script src="/order-upload.js?v=20261102-perf2" defer></script>
+  <script src="/app.js?v=20261102-perf2" defer></script>
+  <script src="/catalogue.js?v=20261102-perf2" defer></script>
+  <script src="/stock.js?v=20261102-perf2" defer></script>
+  <script src="/stock-extras.js?v=20261102-perf2" defer></script>
+  <script src="/materials.js?v=20261102-perf2" defer></script>
+  <script src="/goods-purchases.js?v=20261102-perf2" defer></script>
+  <script src="/insights.js?v=20261102-perf2" defer></script>
+  <script src="/sales-charts.js?v=20261102-perf2" defer></script>
+  <script src="/shipping-stats.js?v=20261102-perf2" defer></script>
+  <script src="/product-analytics.js?v=20261102-perf2" defer></script>
+  <script src="/kol.js?v=20261102-perf2" defer></script>
+  <script src="/kol-import.js?v=20261102-perf2" defer></script>
+  <script src="/operations-ui.js?v=20261102-perf2" defer></script>
+  <script src="/workspace.js?v=20261102-perf2" defer></script>
+  <script src="/locations.js?v=20261102-perf2" defer></script>
+  <script src="/assistant-chat.js?v=20261102-perf2" defer></script>
+  <script src="/ai-evaluation.js?v=20261102-perf2" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">跳至主要內容</a>
+  <header class="topbar">
+    <button id="operations-menu-toggle" type="button" aria-controls="workspace-navigation" aria-expanded="false">導覽</button>
+  </header>
+  <div class="layout">
+    <nav id="workspace-navigation" class="sidebar" aria-label="工作區導覽">
+      <section class="nav-group" aria-labelledby="nav-inventory">
+        <h2 id="nav-inventory" class="nav-group-title">商品與庫存</h2>
+        <a href="#catalogue">SKU 商品庫</a>
+        <a href="#stock">入庫管理</a>
+        <a href="#locations">櫃位管理</a>
+        <a href="#transfers">調撥管理</a>
+      </section>
+      <section class="nav-group" aria-labelledby="nav-fulfillment">
+        <h2 id="nav-fulfillment" class="nav-group-title">出貨作業</h2>
+        <a href="#shipping">出貨管理</a>
+      </section>
+      <section class="nav-group" aria-labelledby="nav-analysis">
+        <h2 id="nav-analysis" class="nav-group-title">報表與分析</h2>
+        <a href="#dashboard">銷售總覽</a>
+        <a href="#shipping-statistics">出貨總覽</a>
+        <a href="#kol">KOL 分析</a>
+        <a href="#sales">銷售查詢</a>
+      </section>
+      <section class="nav-group" aria-labelledby="nav-materials">
+        <h2 id="nav-materials" class="nav-group-title">採購與物料</h2>
+        <a href="#goods-purchases">商品採購／叫貨</a>
+        <a href="#materials">物料與採購</a>
+      </section>
+      <section class="nav-group" aria-labelledby="nav-data">
+        <h2 id="nav-data" class="nav-group-title">資料匯入</h2>
+        <a href="#import">匯入銷售訂單</a>
+        <a href="#history">匯入紀錄</a>
+      </section>
+      <section class="nav-group" aria-labelledby="nav-orders">
+        <h2 id="nav-orders" class="nav-group-title">訂單接收</h2>
+        <a href="#orders">接收訂單</a>
+      </section>
+      <section class="nav-group" aria-labelledby="nav-ai">
+        <h2 id="nav-ai" class="nav-group-title">AI 助理</h2>
+        <a href="#assistant">聊天室</a>
+        <a href="#ai-settings">AI 設定</a>
+        <a href="#ai-evaluation">AI 評測</a>
+      </section>
+    </nav>
+    <main id="main">
+      <div class="page-heading"><div><h1>營運工作台</h1></div></div>
+      <div id="notice" class="notice" role="status" aria-live="polite">正在讀取工作區…</div>
+
+      <section id="demo-setup" class="panel setup" aria-labelledby="setup-title" hidden>
+        <div><p class="eyebrow">從這裡開始</p><h2 id="setup-title">準備合成示範資料</h2><p>建立商品、套組與訂單來源，不會自動匯入訂單。重複初始化不會清除既有資料。</p></div>
+        <button id="seed" type="button">初始化示範主檔</button>
+        <section class="content-section sample-details"><h3 class="section-title">下載或預檢合成訂單範例</h3><p class="muted">依序匯入 01、02 可得到 490 元／2 單；03 修訂後為 590 元，04 取消後為 240 元。錯誤案例請獨立觀察。</p><div id="samples" class="sample-list"></div></section>
+      </section>
+
+      <section id="catalogue" class="panel" aria-labelledby="catalogue-title">
+        <div class="section-heading"><h2 id="catalogue-title">SKU 商品庫</h2><button id="new-product" type="button">新增商品</button></div>
+        <form id="catalogue-search" class="search-bar"><label class="sr-only" for="product-search">搜尋商品</label><input id="product-search" type="search" placeholder="搜尋名稱、SKU 或條碼" maxlength="200"><button class="secondary" type="submit">搜尋</button></form>
+        <p id="catalogue-notice" role="status" hidden></p>
+        <div class="table-scroll"><table><caption class="sr-only">商品庫</caption><thead><tr><th>商品／規格</th><th>SKU</th><th>條碼</th><th>類型</th><th class="numeric">實體在庫</th><th class="numeric">一般品可用</th><th>狀態</th><th>操作</th></tr></thead><tbody id="product-rows"></tbody></table></div>
+        <section id="product-editor" class="content-section"><h3 class="section-title">商品資料</h3>
+          <button id="product-overview-toggle" class="secondary" type="button" hidden>查看營運資料</button>
+          <div id="product-overview" hidden></div>
+          <form id="product-form" class="editor-grid">
+            <label>商品名稱<input id="product-name" maxlength="200" required></label>
+            <label>SKU<input id="product-sku" maxlength="200" required></label>
+            <label>款式名稱<input id="product-group" maxlength="200"></label>
+            <label>規格<input id="product-specification" maxlength="200" placeholder="例如 小號／白色"></label>
+            <label>商品條碼<input id="product-barcode" maxlength="200"></label>
+            <label>類型<select id="product-kind"><option value="product">單品</option><option value="bundle">銷售套組</option></select></label>
+            <label class="checkbox"><input id="product-active" type="checkbox" checked>啟用商品</label>
+            <div id="product-attributes" class="editor-grid full-width"></div>
+            <div class="form-actions full-width"><button type="submit">保存商品</button><button id="cancel-product" class="secondary" type="button">關閉</button></div>
+          </form>
+          <div id="product-history"></div>
+          <section id="bundle-editor" hidden class="content-section"><h3 class="section-title">套組組成</h3><form id="bundle-form"><label>生效時間<input id="bundle-start" type="datetime-local" required></label><div id="bundle-lines"></div><div class="form-actions"><button id="bundle-add" type="button" class="secondary">新增組成商品</button><button type="submit">保存組成版本</button></div></form></section>
+        </section>
+        <section class="content-section"><h3 class="section-title">管理商品屬性</h3><form id="attribute-form" class="editor-grid"><label>屬性名稱<input id="attribute-label" maxlength="80" required placeholder="例如 材質"></label><label>屬性代碼<input id="attribute-key" maxlength="80" required placeholder="例如 material"></label><label>型別<select id="attribute-kind"><option value="text">文字</option><option value="number">數字</option><option value="choice">選項</option></select></label><label>選項（以逗號分隔）<input id="attribute-options" placeholder="布,紙"></label><button type="submit">新增屬性</button></form></section>
+      </section>
+
+      <section id="stock" class="panel" aria-labelledby="stock-title" hidden>
+        <div class="section-heading"><h2 id="stock-title">庫存與入庫</h2><button id="new-receipt" type="button">建立入庫單</button></div>
+        <p id="stock-notice" role="status" hidden></p>
+        <form id="receipt-search-form" class="search-bar"><label>搜尋入庫單<input id="receipt-search" type="search" placeholder="單號、來源、商品或 SKU"></label><label>狀態<select id="receipt-filter-state"><option value="">全部狀態</option><option value="draft">草稿</option><option value="ordered">已訂貨／待到貨</option><option value="confirmed">已入庫</option><option value="cancelled">已取消</option></select></label><label>配櫃狀態<select id="receipt-filter-putaway"><option value="">全部</option><option value="pending">待配櫃（含部分）</option><option value="unassigned">未配櫃</option><option value="partial">部分配櫃</option><option value="complete">已配櫃</option></select></label><button type="submit">查詢</button></form>
+        <div class="table-scroll"><table><caption class="sr-only">現有庫存</caption><thead><tr><th>商品／SKU</th><th class="numeric">總實體在庫</th><th class="numeric">準備中</th><th class="numeric">已配貨</th><th class="numeric">可售未預留</th><th class="numeric">退貨入庫</th><th class="numeric">瑕疵</th><th class="numeric">損毀</th><th class="numeric">盒損</th><th class="numeric">庫存成本</th></tr></thead><tbody id="stock-rows"></tbody></table></div>
+        <section class="content-section"><h3 class="section-title">庫存說明</h3><p>實體庫存包含準備出貨的商品。一般品可用須已配入可出貨櫃，排除占用、調撥中、未轉回入庫的退貨件與異常品質；盒損品可用另見庫存詳細，出貨時輸入 #條碼。</p></section>
+        <section id="receipt-editor" class="content-section"><h3 class="section-title">入庫單資料</h3><form id="receipt-form"><div class="editor-grid"><label>入庫單號<input id="receipt-number" required maxlength="100"></label><label>進貨來源<input id="receipt-source" maxlength="200" placeholder="供應商或工廠名稱"></label><label>進貨運費（可待補）<input id="receipt-freight" inputmode="decimal" placeholder="未填費用"></label><label>稅費（可待補）<input id="receipt-tax" inputmode="decimal" value="0.00"></label><label>費用分攤<select id="receipt-allocation"><option value="quantity">依件數</option><option value="value">依貨款金額</option></select></label></div><label>備註<textarea id="receipt-comment" maxlength="2000" rows="2"></textarea></label><div id="receipt-lines"></div><div class="form-actions"><button id="receipt-add" class="secondary" type="button">新增商品</button><button type="submit">保存進貨內容</button></div></form></section>
+        <h3>入庫單</h3><div class="table-scroll"><table><caption class="sr-only">入庫單紀錄</caption><thead><tr><th>單號</th><th>進貨來源</th><th>總件數</th><th>入庫狀態</th><th>配櫃狀態</th><th>建立時間</th><th>備註</th><th>操作</th></tr></thead><tbody id="receipt-rows"></tbody></table></div>
+        <section class="content-section"><h3 class="section-title">逐件庫存與異動紀錄</h3><div id="unit-history"></div></section>
+        <section class="content-section"><h3 class="section-title">報表與預警</h3><form id="stock-report-form" class="editor-grid"><label>開始日期<input id="stock-report-start" type="date"></label><label>結束日期<input id="stock-report-end" type="date"></label><label>庫存截至時間<input id="stock-report-asof" type="datetime-local"></label><button type="submit">查詢報表</button></form><div id="stock-report-summary"></div><div class="table-scroll"><table><caption class="sr-only">庫存與預警報表</caption><thead><tr><th>商品</th><th>在庫／可用</th><th class="numeric">庫存成本</th><th>門檻預警</th><th>出貨覆蓋</th></tr></thead><tbody id="stock-report-rows"></tbody></table></div><div id="stock-monthly"></div><section class="content-section"><h3 class="section-title">設定預警門檻</h3><form id="alert-form" class="editor-grid"><label>商品<select id="alert-product" required></select></label><label>庫存門檻<input id="alert-minimum" type="number" min="0" max="1000000" required></label><label>覆蓋天數門檻<input id="alert-days" inputmode="decimal" required></label><button type="submit">保存門檻</button></form></section></section>
+      </section>
+
+      <section id="orders" class="panel" aria-labelledby="orders-title" hidden>
+        <div class="section-heading"><h2 id="orders-title">接收訂單</h2><div class="form-actions"><a class="button secondary" href="#import">匯入銷售訂單</a><button id="new-order" type="button">新增訂單</button></div></div>
+        <p id="orders-notice" role="status" hidden></p>
+        <form id="order-search-form" class="search-bar"><label>搜尋訂單<input id="order-search" type="search" maxlength="200" placeholder="訂單編號、商品名稱或 SKU"></label><label>來源<select id="order-filter-account"><option value="">全部來源</option></select></label><label>訂單狀態<select id="order-filter-status"><option value="">全部狀態</option><option value="active">有效</option><option value="cancelled">取消</option></select></label><button type="submit">查詢訂單</button></form>
+        <section id="order-editor" class="content-section"><h3 class="section-title">訂單資料</h3><form id="order-form"><div class="editor-grid"><label>訂單來源<select id="order-account" required></select></label><label>訂單編號<input id="order-number" required maxlength="100"></label><label>下單時間<input id="order-time" type="datetime-local" required></label></div><section class="content-section"><h3 class="section-title">顧客與歸因（選填）</h3><div class="editor-grid"><label>顧客識別碼<input id="order-customer" maxlength="200"></label><label>KOL 來源標記<input id="order-kol" maxlength="200"></label><label>UTM medium<input id="order-utm" maxlength="2000"></label><label>訂單總金額（含折扣與運費）<input id="order-total" inputmode="decimal" placeholder="未提供可留白"></label></div></section><div id="order-lines"></div><div class="form-actions"><button id="order-add" type="button" class="secondary">新增商品</button><button id="order-add-non-stock" type="button" class="secondary">新增非庫存明細</button><button type="submit">保存訂單</button></div><a href="#import">尚無來源？新增本機訂單來源</a></form></section>
+        <div class="table-scroll"><table><caption class="sr-only">已接收訂單</caption><thead><tr><th>來源／訂單</th><th>商品</th><th class="numeric">商品金額</th><th>狀態</th><th>操作</th></tr></thead><tbody id="order-rows"></tbody></table></div>
+      </section>
+
+      <section id="shipping" class="panel" aria-labelledby="shipping-title" hidden>
+        <div class="section-heading"><h2 id="shipping-title">出貨管理</h2></div>
+        <p id="shipping-notice" role="status" hidden></p>
+          <form id="shipment-search-form" class="search-bar"><label>搜尋出貨單<input id="shipment-search" type="search" placeholder="訂單編號、通路、商品或 SKU"></label><label>狀態<select id="shipment-filter-state"><option value="">全部狀態</option><option value="preparing">準備中</option><option value="complete">完成</option><option value="cancel">取消</option></select></label><label>出貨通路<select id="shipment-filter-source"><option value="">全部通路</option></select></label><button type="submit">查詢</button></form>
+        <section id="shipment-editor"><h2>新增出貨單</h2><form id="shipment-form">
+          <h3 class="document-section-title">出貨單資訊</h3>
+          <div class="editor-grid"><div><label><span id="shipment-number-label">訂單編號</span><input id="shipment-order-number" maxlength="100" placeholder="輸入訂單編號" required></label><input id="shipment-order" type="hidden"></div><label>出貨通路<input id="shipment-channel" maxlength="200" list="shipment-channels"></label><datalist id="shipment-channels"></datalist></div>
+          <div id="shipment-origin"></div><div id="shipment-parent" hidden></div>
+          <label>備註<textarea id="shipment-comment" maxlength="2000" rows="2"></textarea></label>
+          <p id="shipment-empty" role="status"></p>
+          <div class="form-actions"><button id="shipment-save" type="submit">保存出貨單</button></div>
+        </form></section>
+        <div class="table-scroll"><table><caption class="sr-only">出貨單</caption><thead><tr><th>訂單編號</th><th>狀態</th><th>出貨通路</th><th>首次完成時間</th><th>備註</th><th>操作</th></tr></thead><tbody id="shipment-rows"></tbody></table></div>
+      </section>
+
+      <section id="materials" class="panel" aria-labelledby="materials-title" hidden>
+        <div class="section-heading"><h2 id="materials-title">物料與採購</h2><button id="material-new" type="button">新增物料</button></div>
+        <div id="material-tabs" class="work-tabs" aria-label="物料工作區"></div>
+        <p id="materials-notice" role="status" hidden></p>
+        <div id="material-summary" hidden></div>
+        <div id="material-workspace" class="master-detail"><div id="material-list" class="master-pane"></div><div id="material-detail" class="detail-pane" aria-label="物料選取明細"><p>選取左側項目查看明細。</p></div></div>
+      </section>
+
+      <section id="dashboard" class="panel" aria-labelledby="dashboard-title" hidden>
+        <div class="section-heading"><h2 id="dashboard-title">銷售總覽</h2><a id="dashboard-sales-link" class="button secondary" href="#sales">查看銷售明細</a></div>
+        <form id="dashboard-form" class="search-bar">
+          <label>開始日期<input id="dashboard-start" type="date" required></label>
+          <label>結束日期<input id="dashboard-end" type="date" required></label>
+          <button type="submit">查詢</button>
+        </form>
+        <p id="dashboard-notice" role="status"></p>
+        <dl id="dashboard-metrics" class="dashboard-metrics" aria-label="所選期間銷售摘要">
+          <div><dt>商品銷售金額 · TWD</dt><dd id="dashboard-amount">—</dd></div>
+          <div><dt>有效訂單數</dt><dd id="dashboard-orders">—</dd></div>
+          <div><dt>銷售品項數量</dt><dd id="dashboard-quantity">—</dd></div>
+          <div><dt>平均每單商品金額 · TWD</dt><dd id="dashboard-average">—</dd></div>
+        </dl>
+        <section id="dashboard-comparison" class="analytics-section" aria-live="polite"></section>
+        <section id="dashboard-quality" class="analytics-section" aria-live="polite"></section>
+        <section class="dashboard-tasks" aria-labelledby="dashboard-tasks-title">
+          <h3 id="dashboard-tasks-title">目前待處理</h3><p class="hint">目前狀態，不受上方銷售日期篩選影響。</p>
+          <ul><li><a href="#history">待確認訂單：<span id="dashboard-pending">讀取中…</span></a></li><li><a href="#shipping">未完成出貨單：<span id="dashboard-shipping">讀取中…</span></a></li><li><a href="#stock-reports">低庫存檢查：<span id="dashboard-stock-alert">讀取中…</span></a></li></ul>
+        </section>
+        <details class="sales-disclosure"><summary>資料來源與計算方式</summary><p>統計本系統已確認的銷售訂單，不含獨立的 KOL Excel 分析資料。金額為商品折後金額，不含另列稅／運費；平均每單商品金額＝商品金額合計 ÷ 有效訂單數，沒有訂單時不計算。套組一套計一個銷售品項。庫存與出貨處理狀態另列，不代表所選期間的銷售量。</p></details>
+      </section>
+
+      <section id="sales" class="panel" aria-labelledby="sales-title" hidden>
+        <div class="section-heading"><h2 id="sales-title">銷售查詢</h2><a class="button secondary" href="#dashboard">銷售總覽</a></div>
+        <form id="filter-form" class="sales-query-form">
+          <div class="search-bar">
+          <label>開始日期<input id="filter-start" type="date"></label>
+          <label>結束日期<input id="filter-end" type="date"></label>
+          <button type="submit">查詢</button></div>
+          <details class="sales-disclosure"><summary>更多篩選：來源與品項</summary><div class="search-bar">
+          <label>來源帳戶<select id="filter-account"><option value="">全部來源</option></select></label>
+          <label>銷售品項<select id="filter-product"><option value="">全部品項</option></select></label>
+          </div></details>
+        </form>
+        <p id="sales-query-context" role="status"></p>
+        <details class="sales-disclosure"><summary>統計口徑與資料來源</summary><p>日期含起訖日，以台北時區查詢。商品篩選依原銷售品項；套組收入留在套組，不分攤到組成商品。</p><p id="report-meta" class="hint"></p><div id="physical" class="physical"></div></details>
+        <div id="metrics" class="metrics" aria-live="polite"><div><span>營運銷售額 · TWD</span><strong id="amount">—</strong><small>商品折後金額，不含另列稅／運費</small></div><div><span>有效訂單</span><strong id="order-count">—</strong><small>依來源帳戶與訂單去重</small></div><div><span>銷售品項數量</span><strong id="quantity">—</strong><small>套組一套計為一個銷售品項</small></div></div>
+        <div id="pending" class="data-note"></div>
+        <div class="section-heading"><h3>銷售明細</h3><a id="export" class="button secondary" href="/api/sales/export">匯出目前查詢 CSV</a></div>
+        <div class="table-scroll"><table><caption class="sr-only">有效訂單銷售明細</caption><thead><tr><th>來源／訂單</th><th>下單時間</th><th>銷售品項</th><th class="numeric">數量</th><th class="numeric">商品金額</th><th>歸因證據</th><th>來源</th></tr></thead><tbody id="sales-rows"></tbody></table></div>
+      </section>
+
+      <section id="import" class="panel" aria-labelledby="import-title" hidden>
+        <div class="section-heading"><h2 id="import-title">匯入銷售訂單</h2><a class="button secondary" href="/samples/01-shopline.csv" download>下載 CSV 範例</a></div>
+        <p>上傳訂單 Excel 或標準 CSV，先預覽再確認。Excel 內尚未建立的 SKU 會列出供確認，確認後才建立商品與營運訂單；不增加庫存、不自動出貨。</p>
+        <section class="content-section"><h3 class="section-title">Excel 訂單欄位</h3><p>支援目前水壺訂單的 .xlsx 格式，單一可見工作表、儲存格須為值。必填：訂單號碼、訂單日期、訂單狀態、貨幣、訂單合計、商品貨號、商品名稱、商品結帳價、數量。商品類型、顧客 ID 與 UTM 媒介可選填，不需要另外的商品對照表。</p><p>商品結帳價按單價乘數量計算商品金額；訂單合計每單只計一次，可只填首列。貨幣限 TWD，未帶時區的日期按台北時間。已取消訂單保留紀錄、不計銷售。已完成代表來源訂單狀態，不會替本系統完成出貨。</p><p>直接上傳這間商店的訂單即可，不需建立或選擇來源。Excel 的「訂單來源」欄保留在原始資料。重複檔案不重複匯入；同單不同內容以確認的新批次更新版本，既有出貨需求另行核對。上限仍為 2 MB／5,000 筆明細。</p><details><summary>標準 CSV 格式</summary><p>UTF-8 orders-v1：order_id、source_revision、ordered_at、raw_status、currency、expected_line_count、order_item_amount、line_id、external_sku、item_name、quantity、line_item_amount。CSV 的 SKU 須先建檔；line_type=non_stock 且 external_sku 留白可匯入非庫存明細。選填 utm_medium、order_total；其他欄位與格式請參考 CSV 範例。</p></details></section>
+        <section class="content-section" hidden><h3 class="section-title">新增／管理訂單來源</h3><form id="account-form" class="editor-grid"><label>來源名稱<input id="account-name" required maxlength="200" placeholder="例如 門市訂單"></label><label>來源類型<select id="account-platform"><option value="manual">手動／門市</option><option value="SHOPLINE">SHOPLINE 分類</option><option value="Shopee">蝦皮分類</option></select></label><button type="submit">建立來源</button></form><div id="account-list"></div></section>
+        <form id="import-form" class="import-form">
+          <input id="import-account" type="hidden" value="">
+          <label>訂單檔案（Excel 或 CSV）<input id="import-file" type="file" accept=".xlsx,.csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,text/csv" required></label>
+          <label class="checkbox"><input id="complete-snapshot" type="checkbox" required>這份檔案是本次要採用的訂單完整明細；已有的訂單將以本次內容更新。</label>
+          <button type="submit" id="preview-button">上傳並預檢</button>
+        </form>
+        <div id="batch-preview" class="preview" hidden tabindex="-1"></div>
+      </section>
+
+      <section id="shipping-statistics" class="panel stock-surface" aria-labelledby="shipping-statistics-title" hidden>
+        <div class="section-heading"><h2 id="shipping-statistics-title">出貨總覽</h2><a class="button secondary" href="#shipping">處理出貨單</a></div>
+        <p class="hint">按實際完成出貨／退貨日期統計，與按下單日期計算的銷售總覽分開。</p>
+        <section class="content-section" aria-labelledby="shipping-current-title">
+          <h3 id="shipping-current-title">目前待出貨</h3>
+          <p class="hint">全部期間、通路與商品的未完成出貨單，不受下方篩選影響。件數以完成出貨紀錄另計。</p>
+          <div id="shipping-current" aria-live="polite"></div>
+        </section>
+        <h3>期間出退貨表現</h3>
+        <form id="shipping-statistics-form" class="search-bar">
+          <label>開始日期<input id="shipping-statistics-start" type="date" required></label>
+          <label>結束日期<input id="shipping-statistics-end" type="date" required></label>
+          <label>出貨通路<select id="shipping-statistics-channel"><option value="all">全部通路</option></select></label>
+          <label>商品 SKU<select id="shipping-statistics-product"><option value="">全部商品</option></select></label>
+          <button type="submit">查詢統計</button>
+        </form>
+        <p id="shipping-statistics-notice" role="status"></p>
+        <div id="shipping-statistics-result"></div>
+      </section>
+      <section id="kol" class="panel kol-surface" aria-label="KOL分析" hidden></section>
+      <section id="history" class="panel" aria-labelledby="history-title" hidden>
+        <div class="section-heading"><h2 id="history-title">匯入紀錄</h2><a class="button secondary" href="#import">匯入銷售訂單</a></div>
+        <div class="table-scroll"><table><caption class="sr-only">匯入批次歷史</caption><thead><tr><th>檔案／批次</th><th>來源帳戶</th><th>建立時間</th><th>狀態</th><th>操作</th></tr></thead><tbody id="history-rows"></tbody></table></div>
+      </section>
+      <section id="assistant" class="panel ai-chat-page" aria-labelledby="ai-chat-title" hidden></section>
+      <section id="ai-settings" class="panel ai-settings-page" aria-labelledby="ai-settings-title" hidden></section>
+      <section id="ai-evaluation" class="panel" aria-labelledby="ai-evaluation-title" hidden></section>
+    </main>
+  </div>
+</body>
+</html>
+

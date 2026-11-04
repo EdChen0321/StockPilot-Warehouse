@@ -1,0 +1,12 @@
+const assert = require('node:assert/strict');
+const { formatAmount } = require('../web/format.js');
+assert.equal(formatAmount('490.00'), '490.00');
+assert.equal(formatAmount('1234567.89'), '1,234,567.89');
+assert.equal(formatAmount('4999999999999999.99'), '4,999,999,999,999,999.99');
+assert.equal(formatAmount('0.00'), '0.00');
+assert.throws(() => formatAmount('NaN'));
+assert.equal(formatAmount('-32.00'), '-32.00');
+assert.equal(formatAmount('-1234567.89'), '-1,234,567.89');
+assert.equal(formatAmount('-0.01'), '-0.01');
+assert.throws(() => formatAmount('--32.00'));
+console.log('9 exact amount formatting assertions passed');

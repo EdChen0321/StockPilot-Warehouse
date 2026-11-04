@@ -1,0 +1,30 @@
+#ai-evaluation{min-width:0}
+#ai-evaluation h3{margin:2rem 0 .8rem;font-size:1.15rem}
+#ai-evaluation .eval-actions{display:flex;gap:.65rem;flex-wrap:wrap}
+.eval-filters{display:grid;grid-template-columns:minmax(250px,2fr) repeat(3,minmax(120px,1fr));gap:1rem;margin:1.2rem 0}
+.eval-filters label{display:flex;flex-direction:column;gap:.45rem;font-size:.9rem}
+.eval-filters select{width:100%;min-width:0}
+.eval-notice{padding:.8rem 0;border-block:1px solid var(--line);margin:1rem 0}
+.eval-meta{color:var(--muted);font-size:.9rem;overflow-wrap:anywhere;max-width:85ch;line-height:1.6}
+.eval-metrics{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));margin:1.5rem 0;gap:1.2rem}
+.eval-metrics dt{color:var(--muted);font-size:.85rem;margin-bottom:.4rem}
+.eval-metrics dd{margin:0;font-size:1.35rem;font-weight:650;font-variant-numeric:tabular-nums}
+.eval-chart{height:230px;width:100%;min-width:0}
+#ai-evaluation table{width:100%;font-variant-numeric:tabular-nums}
+#ai-evaluation td{vertical-align:top}
+.eval-table>table{min-width:980px}
+.eval-table td:first-child{min-width:200px;max-width:310px}
+.eval-table td:first-child p{margin:.4rem 0;line-height:1.6}
+.eval-table td:last-child{min-width:200px;max-width:440px}
+.eval-table pre{white-space:pre-wrap;overflow-wrap:anywhere;max-height:320px;overflow:auto;background:var(--soft);padding:.8rem;font-size:.85rem}
+.eval-table details p{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.6}
+.eval-table h4{margin:1rem 0 .5rem}
+.eval-state{display:inline-block;padding:.25rem .5rem;border-radius:4px;font-size:.85rem;white-space:nowrap;background:#edf1f4;color:#415365}
+.eval-state[data-state=fail]{background:#f7e8e6;color:#8d342c}
+.eval-state[data-state=pass]{background:#e6f0e9;color:#275b3c}
+#ai-evaluation summary{cursor:pointer;line-height:1.7}
+.eval-methodology{margin-top:2rem;padding-top:1rem;border-top:1px solid var(--line)}
+.eval-methodology p{max-width:75ch;line-height:1.75}
+#ai-evaluation :focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+@media(max-width:1100px){.eval-filters{grid-template-columns:repeat(2,minmax(0,1fr))}.eval-metrics{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:600px){.eval-filters{grid-template-columns:1fr}.eval-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}#ai-evaluation>.section-heading{align-items:flex-start;gap:1rem;flex-direction:column}.eval-chart{height:270px}}

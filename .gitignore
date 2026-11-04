@@ -1,0 +1,72 @@
+# Local runtime, dependencies and generated output
+.local/
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+node_modules/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+dist/
+build/
+*.egg-info/
+.coverage
+htmlcov/
+*.log
+
+# Credentials and local settings
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+.aws/
+.vscode/
+.idea/
+
+# Local agent tools, Spec Kit, plans and handoff notes
+/.agents/
+/.codex/
+/.specify/
+/.impeccable/
+/.taste-skill/
+/specs/
+/AGENTS.md
+/DEVNOTE.md
+/docs/*
+!/docs/inventory-shipping.md
+!/docs/production-workflow.md
+!/docs/goods-purchases.md
+
+# Business data, backups and imported spreadsheets stay on this machine
+*.sqlite*
+*.db
+*.db-*
+*.bak
+*.backup
+*.xlsx
+*.xls
+*.xlsm
+*.zip
+/references/
+/artifacts/
+/outputs/
+/demo/
+/tools/generate_demo.py
+
+# Keep only helpers imported by the automated test suite
+/qa/*
+!/qa/ai_evaluation_cases.py
+!/qa/run_ai_evaluation.py
+!/qa/verify_order_flow.py
+
+# Machine-specific database maintenance scripts
+/tools/upgrade_cost_schema.py
+/tools/verify_cost_revision.py
+
+# OS temporary files
+.DS_Store
+Thumbs.db
+Desktop.ini
+~$*

@@ -1,0 +1,12 @@
+const assert=require('node:assert/strict');
+const {stockDisplayState}=require('../web/format.js');
+const unit={location:'warehouse',quality:'good',packaging:'good'};
+assert.equal(stockDisplayState(unit),'入庫');
+assert.equal(stockDisplayState({...unit,shipment_id:'s'}),'準備中');
+assert.equal(stockDisplayState({...unit,location:'staging'}),'準備中');
+assert.equal(stockDisplayState({...unit,location:'customer'}),'出庫');
+assert.equal(stockDisplayState({...unit,return_hold:true}),'退貨入庫');
+assert.equal(stockDisplayState({...unit,quality:'defective'}),'瑕疵');
+assert.equal(stockDisplayState({...unit,quality:'damaged'}),'毀損');
+assert.equal(stockDisplayState({...unit,quality:'pending'}),'待驗收');
+console.log('8 stock display state assertions passed');

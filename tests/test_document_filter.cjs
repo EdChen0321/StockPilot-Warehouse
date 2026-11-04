@@ -1,0 +1,12 @@
+﻿'use strict';
+const assert=require('node:assert/strict');
+const {documentMatches}=require('../web/format.js');
+const record={number:'OUT-001',state:'staged',account_id:'shop-a'};
+assert.equal(documentMatches(record,{q:'  001  '}),true);
+assert.equal(documentMatches(record,{q:'bag-01'},['旅行袋','BAG-01']),true);
+assert.equal(documentMatches(record,{q:'不存在'},['BAG-01']),false);
+assert.equal(documentMatches(record,{state:'shipped'}),false);
+assert.equal(documentMatches(record,{state:'staged',source:'shop-a',q:'order-2'},['ORDER-2']),true);
+assert.equal(documentMatches(record,{source:'shop-b'}),false);
+assert.equal(documentMatches(record,{}),true);
+console.log('7 document filtering assertions passed');
