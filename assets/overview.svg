@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">StockPilot 倉管系統專案介紹</title>
+  <desc id="desc">貨在哪裡？現在能出多少？逐件追查庫存、櫃位與出退貨紀錄。</desc>
+  <rect width="1200" height="630" fill="#f3f6fb"/>
+  <rect x="33" y="33" width="1134" height="564" rx="35" fill="#ffffff" stroke="#d5e2f3" stroke-width="2"/>
+  <rect x="79" y="80" width="252" height="38" rx="19" fill="#e7f0ff"/>
+  <text x="100" y="107" fill="#175bd6" font-family="Arial, sans-serif" font-size="19" font-weight="700" letter-spacing="1">OPEN SOURCE · 2026</text>
+  <text x="79" y="246" fill="#172334" font-family="Noto Sans TC, Microsoft JhengHei, sans-serif" font-size="86" font-weight="800">貨在哪裡？</text>
+  <text x="79" y="351" fill="#175bd6" font-family="Noto Sans TC, Microsoft JhengHei, sans-serif" font-size="86" font-weight="800">現在能出多少？</text>
+  <text x="83" y="427" fill="#49617c" font-family="Noto Sans TC, Microsoft JhengHei, sans-serif" font-size="29" font-weight="500">StockPilot 倉管系統</text>
+  <text x="83" y="473" fill="#49617c" font-family="Noto Sans TC, Microsoft JhengHei, sans-serif" font-size="27">逐件追查庫存、櫃位與出退貨紀錄</text>
+  <rect x="79" y="513" width="514" height="58" rx="14" fill="#175bd6"/>
+  <text x="108" y="553" fill="#ffffff" font-family="Noto Sans TC, Microsoft JhengHei, sans-serif" font-size="26" font-weight="700">入庫 → 配櫃 → 出貨 → 退貨</text>
+  <text x="1118" y="559" text-anchor="end" fill="#8a9aae" font-family="Arial, sans-serif" font-size="20" letter-spacing="1">STOCKPILOT / WAREHOUSE</text>
+</svg>

@@ -1,5 +1,7 @@
 # StockPilot 倉管系統
 
+![StockPilot 倉管系統：貨在哪裡、現在能出多少；入庫、配櫃、出貨與退貨流程概覽](assets/overview.svg)
+
 **貨在哪裡、還能出多少、庫存為什麼變動，都應該查得到。**
 
 StockPilot 倉管系統讓小型商家從 Excel 走向有單據可追的日常倉管流程：
