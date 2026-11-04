@@ -1,12 +1,16 @@
 # StockPilot 倉管系統
 
-**給小型商家使用的輕量庫存管理工具：從商品入庫、櫃位到出貨，都能沿單據查回去。**
+**貨在哪裡、還能出多少、庫存為什麼變動，都應該查得到。**
 
-如果你還在用 Excel 記錄庫存與出貨，想開始把入庫、調撥、出貨和退貨分成清楚的單據，暫時又沒有預算導入大型系統，可以先從這裡試跑日常倉管流程。
+StockPilot 倉管系統讓小型商家從 Excel 走向有單據可追的日常倉管流程：
 
-我把五年多的電商營運與內部系統規劃經驗，整理成 StockPilot 倉管系統：管理商品、入庫與櫃位、逐件庫存、出退貨及採購；倉管人員可直接建立出貨單，沿商品與單據查詢每次異動。
+- **庫存看得清楚：** 記錄商品、逐件庫存與櫃位，區分實體在庫和可出貨量。
+- **進出有據可查：** 入庫、調撥、出貨與退貨各有紀錄，可沿商品與單據追查異動。
+- **出貨由倉管掌握：** 直接建立出貨單，也能管理商品採購、物料與工廠生產紀錄。
 
-[快速開始](#快速開始安裝與本機使用方式) · [第一次操作](#第一次操作從這裡開始) · [功能與操作](#功能與操作) · [線上 Demo 狀態](#線上-demo-狀態) · [開發路線圖](ROADMAP.md)
+這套流程整理自我五年多的電商營運與內部系統規劃經驗。如果你還在用 Excel 管理庫存與出貨，暫時又沒有預算導入大型系統，可以從這裡開始。
+
+[開始使用](#下載並啟動) · [第一次操作](#第一次操作從這裡開始) · [功能與操作](#功能與操作) · [已知問題](#已知問題與使用提醒) · [開發路線圖](ROADMAP.md)
 
 > **專案狀態：開發與驗收中。** 目前以本機單人使用為主；核心頁面已有實作，完整瀏覽器操作驗收、帳號權限與備份還原仍待完成。不建議直接用於正式營運。
 
@@ -16,22 +20,26 @@
 
 這個倉庫把商品、逐件庫存、入庫單、櫃位與出貨單放在同一個工作區。倉管人員可核對實體件數、所在櫃位與可出貨量，從商品或單號追查異動，並直接建立自己的出貨單。
 
-## 快速開始：安裝與本機使用方式
+## 下載並啟動
 
-**前置條件（Prerequisites）：** Windows PowerShell 和 **Python 3.12 以上**，使用下方的下載指令還需要 Git。先確認 `python --version` 顯示的版本符合要求；沒有 Git 也可以在 GitHub 按 **Code → Download ZIP**，解壓縮後用 PowerShell 進入該資料夾，略過下方的 `git clone` 和 `Set-Location` 兩行。
+需要 Windows PowerShell、Python 3.12 以上及 Git。在 PowerShell 執行：
 
 ```powershell
 git clone https://github.com/EdChen0321/StockPilot-Warehouse.git
 Set-Location StockPilot-Warehouse
-python --version
 python -m venv .venv
 .\.venv\Scripts\python.exe -m pip install -r requirements.txt
 .\.venv\Scripts\python.exe -m ops.server
 ```
 
-終端機顯示 `Local workspace: http://127.0.0.1:8816` 後，在同一台電腦開啟 **http://127.0.0.1:8816/**。保持 PowerShell 視窗開啟，停止服務時按 `Ctrl+C`。第一次啟動會建立空的 `.local/workspace.sqlite3`；重新啟動會讀取同一份資料。**這份資料庫不會隨 GitHub 儲存庫一起備份**，請自行保存副本。
+啟動後，在同一台電腦開啟 **http://127.0.0.1:8816/**。保持 PowerShell 視窗開啟；要停止時按 `Ctrl+C`。
 
-若 `python` 開啟 Microsoft Store 或顯示找不到指令，請先安裝 Python 3.12 以上，或把上面前兩個 `python` 指令換成電腦上實際的 `python.exe` 路徑；建立虛擬環境後，其餘指令仍使用 `.venv\Scripts\python.exe`。
+## 已知問題與使用提醒
+
+- **出貨流程仍待完整驗收：** 新倉管包尚未完成真實瀏覽器中的配貨、揀貨與出貨全流程驗收，請先用測試資料試跑。
+- **配貨需要可出貨櫃位：** 若沒有已啟用、符合商品條件且允許出貨的櫃位，配貨會失敗。
+- **大量訂單不適合直接使用：** 目前的本機配置尚未針對大量出貨單或多人同時使用驗證。若有這類需求，需先評估效能並調整部署；也歡迎[聯絡我](#聯絡我)討論合作。
+- **目前以本機單人使用為主：** 尚無帳號權限或自動備份；資料儲存在本機 `.local/workspace.sqlite3`，不會隨 GitHub 儲存庫備份。
 
 ## 第一次操作，從這裡開始
 
@@ -84,4 +92,4 @@ python -m venv .venv
 
 ## 聯絡我
 
-我是 [Ed Chen](https://github.com/EdChen0321)。如果你不太會使用、遇到操作問題，或有適合小型商家的庫存管理需求，歡迎到本專案的 [GitHub Issues](https://github.com/EdChen0321/StockPilot-Warehouse/issues) 留言，說明你想完成的工作與目前卡住的步驟。公開留言請勿附上真實客戶、訂單或其他個資。
+我是 [Ed Chen](https://github.com/EdChen0321)。如果你遇到操作問題，或需要擴充資料量、調整倉管流程，歡迎到本專案的 [GitHub Issues](https://github.com/EdChen0321/StockPilot-Warehouse/issues) 留言討論合作。公開留言請勿附上真實客戶、訂單或其他個資。
