@@ -1,15 +1,33 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
   <title id="title">StockPilot 倉管系統專案介紹</title>
-  <desc id="desc">貨在哪裡？現在能出多少？逐件追查庫存、櫃位與出退貨紀錄。</desc>
-  <rect width="1200" height="630" fill="#f3f6fb"/>
-  <rect x="33" y="33" width="1134" height="564" rx="35" fill="#ffffff" stroke="#d5e2f3" stroke-width="2"/>
-  <rect x="79" y="80" width="252" height="38" rx="19" fill="#e7f0ff"/>
-  <text x="100" y="107" fill="#175bd6" font-family="Arial, sans-serif" font-size="19" font-weight="700" letter-spacing="1">OPEN SOURCE · 2026</text>
-  <text x="79" y="246" fill="#172334" font-family="Noto Sans TC, Microsoft JhengHei, sans-serif" font-size="86" font-weight="800">貨在哪裡？</text>
-  <text x="79" y="351" fill="#175bd6" font-family="Noto Sans TC, Microsoft JhengHei, sans-serif" font-size="86" font-weight="800">現在能出多少？</text>
-  <text x="83" y="427" fill="#49617c" font-family="Noto Sans TC, Microsoft JhengHei, sans-serif" font-size="29" font-weight="500">StockPilot 倉管系統</text>
-  <text x="83" y="473" fill="#49617c" font-family="Noto Sans TC, Microsoft JhengHei, sans-serif" font-size="27">逐件追查庫存、櫃位與出退貨紀錄</text>
-  <rect x="79" y="513" width="514" height="58" rx="14" fill="#175bd6"/>
-  <text x="108" y="553" fill="#ffffff" font-family="Noto Sans TC, Microsoft JhengHei, sans-serif" font-size="26" font-weight="700">入庫 → 配櫃 → 出貨 → 退貨</text>
-  <text x="1118" y="559" text-anchor="end" fill="#8a9aae" font-family="Arial, sans-serif" font-size="20" letter-spacing="1">STOCKPILOT / WAREHOUSE</text>
+  <desc id="desc">深色倉位流程圖，說明逐件庫存如何從入庫單、櫃位走到出貨單。</desc>
+  <defs><pattern id="grid" width="48" height="48" patternUnits="userSpaceOnUse"><path d="M48 0H0V48" fill="none" stroke="#33515a" stroke-width="1"/></pattern></defs>
+  <rect width="1200" height="630" fill="#102b33"/>
+  <rect width="1200" height="630" fill="url(#grid)" opacity=".28"/>
+  <rect width="14" height="630" fill="#cde878"/>
+  <text x="72" y="80" fill="#9dd8d1" font-family="Arial, sans-serif" font-size="22" font-weight="700" letter-spacing="3">STOCKPILOT / WAREHOUSE</text>
+  <path d="M72 105H542M72 472H536" stroke="#528080" stroke-width="2"/>
+  <text x="68" y="220" fill="#f6f4e9" font-family="Noto Sans TC, Microsoft JhengHei, sans-serif" font-size="78" font-weight="800">貨在哪裡？</text>
+  <text x="68" y="325" fill="#d2ec78" font-family="Noto Sans TC, Microsoft JhengHei, sans-serif" font-size="78" font-weight="800">還能出多少？</text>
+  <text x="73" y="394" fill="#d0e1df" font-family="Noto Sans TC, Microsoft JhengHei, sans-serif" font-size="27">逐件庫存與櫃位條件，決定可出貨量。</text>
+  <text x="72" y="521" fill="#f6f4e9" font-family="Noto Sans TC, Microsoft JhengHei, sans-serif" font-size="25" font-weight="600">入庫 · 配櫃 · 出貨 · 退貨</text>
+  <text x="72" y="566" fill="#9dd8d1" font-family="Noto Sans TC, Microsoft JhengHei, sans-serif" font-size="23">每次異動，都能回到原始單據。</text>
+  <path d="M939 203V262M939 357V416" stroke="#a5cfc6" stroke-width="3" stroke-dasharray="7 8"/>
+  <circle cx="939" cy="235" r="7" fill="#d2ec78"/><circle cx="939" cy="389" r="7" fill="#d2ec78"/>
+  <rect x="722" y="111" width="434" height="92" rx="20" fill="#1e4248" stroke="#648b88" stroke-width="2"/>
+  <rect x="750" y="139" width="37" height="37" rx="7" fill="#325f60"/>
+  <path d="M757 152H780M757 161H773" stroke="#d9efeb" stroke-width="3" stroke-linecap="round"/>
+  <text x="813" y="170" fill="#f6f4e9" font-family="Noto Sans TC, Microsoft JhengHei, sans-serif" font-size="29" font-weight="700">入庫單</text>
+  <text x="1108" y="168" text-anchor="end" fill="#9dd8d1" font-family="Noto Sans TC, Microsoft JhengHei, sans-serif" font-size="20">實收紀錄</text>
+  <rect x="722" y="262" width="434" height="95" rx="20" fill="#d2ec78"/>
+  <rect x="750" y="290" width="37" height="37" rx="7" fill="#a7cb49"/>
+  <path d="M756 301H781M756 310H781M756 319H781" stroke="#153936" stroke-width="3" stroke-linecap="round"/>
+  <text x="813" y="323" fill="#14343a" font-family="Noto Sans TC, Microsoft JhengHei, sans-serif" font-size="29" font-weight="800">櫃位與狀態</text>
+  <text x="1108" y="321" text-anchor="end" fill="#36564c" font-family="Noto Sans TC, Microsoft JhengHei, sans-serif" font-size="20">可出貨條件</text>
+  <rect x="722" y="416" width="434" height="92" rx="20" fill="#1e4248" stroke="#648b88" stroke-width="2"/>
+  <rect x="750" y="444" width="37" height="37" rx="7" fill="#325f60"/>
+  <path d="M757 454L766 463L781 448M757 473H780" fill="none" stroke="#d9efeb" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="813" y="475" fill="#f6f4e9" font-family="Noto Sans TC, Microsoft JhengHei, sans-serif" font-size="29" font-weight="700">出貨單</text>
+  <text x="1108" y="473" text-anchor="end" fill="#9dd8d1" font-family="Noto Sans TC, Microsoft JhengHei, sans-serif" font-size="20">異動追查</text>
+  <text x="1154" y="573" text-anchor="end" fill="#80aba8" font-family="Arial, sans-serif" font-size="17" letter-spacing="2">OPEN SOURCE · 2026</text>
 </svg>
